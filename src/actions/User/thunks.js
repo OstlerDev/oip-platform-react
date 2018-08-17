@@ -26,7 +26,7 @@ export const createAccount = (username, pw, options) => dispatch => {
         })
 }
 
-export const accountLogin = (username, pw, options, acc) => dispatch => {
+export const accountLogin = (username, pw, options, acc) => (dispatch, getState) => {
     if (!options.autoLogin) {dispatch(loginFetching())}
     let account = acc ? acc : options ? new Account(username, pw, options) : new Account(username, pw);
     account.login()
@@ -43,7 +43,8 @@ export const accountLogin = (username, pw, options, acc) => dispatch => {
             //ToDo: set discover to true after server fix
             dispatch(getCoinBalances({discover:false}))
             dispatch(getWalletAddresses())
-            dispatch(listenForWebsocketUpdates)
+            console.log("About to listen for websockets after account login...")
+            listenForWebsocketUpdates(dispatch, getState)
         })
         .catch( err => {
             if (!options.store_in_keystore) {

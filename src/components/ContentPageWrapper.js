@@ -30,15 +30,8 @@ class ContentPageWrapper extends Component {
         this.state = {}
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.match.params.id !== prevState.paramsId) {
-            nextProps.selectCurrentArtifact(nextProps.match.params.id);
-            nextProps.fetchArtifactList(RANDOM_ARTIFACT_LIST);
-        }
-
-        return {
-            paramsId: nextProps.match.params.id
-        }
+    componentDidMount() {
+        this.props.selectCurrentArtifact("fca1d6");
     }
 
     render() {

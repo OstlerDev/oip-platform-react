@@ -110,19 +110,9 @@ class App extends Component {
 						{/* Include all components that need to be rendered in the main container content */}
 						<div className="Main">
                             <Switch>
-                                <Route exact path="/" component={Homepage} />
+                                <Route exact path="/" component={ContentPageWrapper} />
                                 <Route exact path="/login" component={LoginPage} />
-                                <Route path="/dmca" component={DMCAForm} />
                                 <Route path="/register" component={RegisterPage} />
-                                <Route path="/search/:id" render={props => <SearchPage  {...props} />} />
-                                <Route path="/pub/:id" render={props => <PublisherPage {...props} />} />
-                                <Route path="/user/:page" render={props => ( this.props.User.isLoggedIn ? ( <UserPage wallet={this.props.Wallet} {...props} /> ) : ( <Redirect to="/"/> ))} />
-								<Route path="/user/:page/:type" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
-								<Route path="/user/:page/:type/:id" render={props => ( this.props.User.isLoggedIn ? ( <UserPage {...props} /> ) : ( <Redirect to="/"/> ))} />
-                                <Route path="/:id" render={props => <ContentPageWrapper {...props} />}/>
-
-                                {/* The switch will render the last Route if no others are found (aka 404 page.) */}
-                                <Route component={NoMatch} />
                             </Switch>
 						</div>
 

@@ -12,7 +12,7 @@ import {
     buyError,
     paymentClear
 } from '../FilePlaylist/actions'
-import {loginPrompt} from '../User/actions'
+import {loginPrompt, setAccount} from '../User/actions'
 import {ArtifactPaymentBuilder} from 'oip-account'
 
 export const getCoinBalances = (options) => async (dispatch, getState) => {
@@ -81,7 +81,7 @@ export const payForArtifactFile = (artifact, file, type, coin) => async (dispatc
     await waitForLogin(dispatch, getState)
 
     //@ToDo: remove hardcode coin var
-    coin = "flo"
+    // coin = "flo"
     if (typeof coin === "string") coin = [coin]
 
     if (type === "view") {dispatch(paymentInProgress(file.key))}
@@ -91,7 +91,8 @@ export const payForArtifactFile = (artifact, file, type, coin) => async (dispatc
     let apb = new ArtifactPaymentBuilder(wallet.wallet, artifact, file.info, type)
 
     let preprocess = await apb.getPaymentAddressAndAmount(coin)
-    console.log("preprocess 1: ", preprocess)
+    console.log("preprocess: ", preprocess)
+
     if (!preprocess.success && preprocess.error_type === "PAYMENT_COIN_SELECT"){
         let coin;
         if (apb.getSupportedCoins().includes("ltc") || apb.getSupportedCoins().includes("btc")) {
@@ -106,22 +107,23 @@ export const payForArtifactFile = (artifact, file, type, coin) => async (dispatc
             } catch (err) {
                 console.log("Error waiting for coinbase \n", err)
             }
+            preprocess = await apb.getPaymentAddressAndAmount(coin)
         } else {
             if (type === "view") {dispatch(paymentError(file.key))}
             else if (type === "buy") {dispatch(buyError(file.key))}
         }
     }
 
-    preprocess = await apb.getPaymentAddressAndAmount(coin)
-    console.log("preprocess 2: ", preprocess)
-
     if (preprocess.success) {
+        listenForWebsocketUpdates(dispatch, getState)
         try {
             let txid = await apb.pay()
             console.log("Payment successful: ", txid)
+            dispatch(serializeAndStoreWallet)
             if (type === "view") {dispatch(payForFile(file.key))}
             else if (type === "buy") {dispatch(buyFile(file.key))}
         } catch (err) {
+            console.log("Error attempting payment: ", err)
             if (type === "view") {dispatch(paymentError(file.key))}
             else if (type === "buy") {dispatch(buyError(file.key))}
         }
@@ -145,12 +147,25 @@ export const handleCoinbaseModalEvents = (event) => (dispatch, getState) => {
     }
 }
 
-export const listenForWebsocketUpdates = () => (dispatch, getState) => {
+export const listenForWebsocketUpdates = (dispatch, getState) => {
+    console.log("Listening for websocket update... ")
     let wallet = getState().Wallet.wallet
     wallet.onWebsocketUpdate((addr) => {
         console.log("Websocket update: ", addr.getPublicAddress())
         dispatch(getCoinBalances({discover: false}))
     })
+}
+
+export const serializeAndStoreWallet = () => async (dispatch, getState) => {
+    console.log("Store wallet")
+    let account = getState().User.Account
+
+    try {
+        let storeSer = await account.store()
+        console.log("Store serialized wallet: Success", storeSer)
+    } catch (err) {
+        console.log("Error attempting to store wallet \n", err)
+    }
 }
 
 // -------------------------------------------------------------------------------------------------
