@@ -77,8 +77,12 @@ const waitForCoinbase = (dispatch, getState, coin) => {
     })
 }
 
-export const payForArtifactFile = (artifact, file, type) => async (dispatch, getState) => {
+export const payForArtifactFile = (artifact, file, type, coin) => async (dispatch, getState) => {
     await waitForLogin(dispatch, getState)
+
+    //@ToDo: remove hardcode coin var
+    coin = "flo"
+    if (typeof coin === "string") coin = [coin]
 
     if (type === "view") {dispatch(paymentInProgress(file.key))}
     else if (type === "buy") {dispatch(buyInProgress(file.key))}
@@ -86,8 +90,8 @@ export const payForArtifactFile = (artifact, file, type) => async (dispatch, get
     let wallet = getState().Wallet
     let apb = new ArtifactPaymentBuilder(wallet.wallet, artifact, file.info, type)
 
-    let preprocess = await apb.getPaymentAddressAndAmount()
-
+    let preprocess = await apb.getPaymentAddressAndAmount(coin)
+    console.log("preprocess 1: ", preprocess)
     if (!preprocess.success && preprocess.error_type === "PAYMENT_COIN_SELECT"){
         let coin;
         if (apb.getSupportedCoins().includes("ltc") || apb.getSupportedCoins().includes("btc")) {
@@ -97,18 +101,19 @@ export const payForArtifactFile = (artifact, file, type) => async (dispatch, get
                 amount: 1,
                 address: wallet.addresses[coin === "ltc" ? "litecoin" : "bitcoin"]
             }))
+            try {
+                await waitForCoinbase(dispatch, getState, coin)
+            } catch (err) {
+                console.log("Error waiting for coinbase \n", err)
+            }
         } else {
             if (type === "view") {dispatch(paymentError(file.key))}
             else if (type === "buy") {dispatch(buyError(file.key))}
         }
-        try {
-            await waitForCoinbase(dispatch, getState, coin)
-        } catch (err) {
-            console.log("Error waiting for coinbase \n", err)
-        }
     }
 
-    preprocess = await apb.getPaymentAddressAndAmount()
+    preprocess = await apb.getPaymentAddressAndAmount(coin)
+    console.log("preprocess 2: ", preprocess)
 
     if (preprocess.success) {
         try {
