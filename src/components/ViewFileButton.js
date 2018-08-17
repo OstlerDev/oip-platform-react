@@ -89,7 +89,7 @@ class ViewFileButton extends Component {
         sugPlay = this.createPriceString(sugPlay);
 
         if (sugPlay === 0 || sugPlay === "0"){
-            viewBtnType = "outline-light"
+            viewBtnType = "outline-info"
             viewString = "Free";
         } else {
             viewString = "$" + sugPlay;
