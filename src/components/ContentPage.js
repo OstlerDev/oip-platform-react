@@ -55,28 +55,8 @@ class ContentPage extends Component {
                                     payForFile={this.props.payForFile}
                                     buyFile={this.props.buyFile}
                                 />
-                                <br />
-                                {(this.props.artifact && this.props.artifact.txid !== "") ?
-                                    <div>
-                                        <IssoCommentBox  addComment={this.props.addComment} txid={this.props.artifact.txid} />
-                                        <IssoComments
-                                            artifact={this.props.artifact}
-                                            artifactState={this.props.artifactState}
-                                            comments={this.props.artifactState.comments}
-                                        />
-                                    </div>
-                                    : ""}
                             </div>
-                            <div id='suggested' className="suggested-content col-12 col-md-3  mt-4 mt-md-0 pl-md-3">
-                                <h6>Suggested Content</h6>
-                                {this.props.artifactList ? (this.props.artifactList.items.map(function(artifact, i){
-                                    return <ContentCard
-                                        key={i}
-                                        artifact={artifact}
-                                        styleContentCard={"small"}
-                                    />
-                                })) : (null)}
-                            </div>
+
                         </div>
                     </div>
                 </div>

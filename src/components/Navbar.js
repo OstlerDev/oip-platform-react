@@ -60,10 +60,8 @@ class Navbar extends Component {
                     <i className="fas fa-bars"></i>
                 </button>
 
-                <div id="navbarSupportedContent" className="collapse navbar-collapse">
-                    <NavbarSearchBar onChange={this.updateTextInput} onKeyPress={this.handleKeyPress} onClick={this.searchForArtifacts} />
+                <div id="navbarSupportedContent" className="collapse navbar-collapse justify-content-end">
                     <div className="user-container d-flex justify-content-end">
-                        {/*<UploadButton isLoggedIn={this.props.User.isLoggedIn}/>*/}
                         {this.props.User.isLoggedIn ? <UserNav logout={this.props.logoutAction} pubName={this.props.User.publisher}/> : <LoginButton/>}
                     </div>
                 </div>

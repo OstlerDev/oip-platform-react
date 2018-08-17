@@ -36,23 +36,17 @@ const ContentCard = (props) => {
     }
 
     return (
-        <div className={styleContentCard}>
+        <div className="card col-9 mt-3 border-0">
+            <div className="card-body p-2 d-flex justify-content-center">
+                <span style={{fontSize: 33, fontWeight: "bold"}} className="card-title">{title}</span>
+            </div>
             <Link to={"/" + txid.substring(0,6) } onClick={scrollToTop} className="" title={title} >
                 <div className="card-img-top content-card-img">
-                    <img src={"http://thumbs.oip.fun/artifact/" + txid.substr(0,6)} alt="" style={{width: "inherit"}} />
+                    <img src={"https://gateway.ipfs.io/ipfs/QmQV23t3wUj7rUGVMDq9Qfgv16j75B1yMpJQcsYpgWKCrt/Apocalypse_CA_Poster.jpg"} alt="" style={{width: "inherit"}} />
                     <button className="btn btn-outline-light border-0 card-media-type m-1"><ArtifactIcon artifact={artifact} /></button>
-                    {duration ? <span className="content-card-xinfo m-1 "><FormattedTime numSeconds={duration} /></span> : null}
+                    {duration ? <span style={{fontSize: "22px"}} className="content-card-xinfo m-1 pr-2"><FormattedTime numSeconds={duration} /></span> : null}
                 </div>
             </Link>
-
-            <div className="card-body p-0">
-                <span style={{fontSize: 14}} className="card-title">{title}</span>
-                <Link to={"/pub/" + publisher } onClick={scrollToTop}>
-                    <div className="pubIcon">
-                        <PublisherIcon maxWidth={20} id={publisher} small={true} pubName={artifact.publisherName} />
-                    </div>
-                </Link>
-            </div>
         </div>
     )
 };

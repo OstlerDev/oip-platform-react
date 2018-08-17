@@ -13,7 +13,7 @@ class VideoPlayer extends Component {
             options: {
                 sources: {src: "", type: 'video/mp4'},
                 poster: "",
-                autoplay: true,
+                autoplay: false,
                 controls: true,
                 preload: "auto"
             }

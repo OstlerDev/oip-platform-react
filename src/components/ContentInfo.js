@@ -48,11 +48,7 @@ class ContentInfo extends Component {
                 <div className="row no-gutters">
 
                     <div className="col-sm-6 col-12 order-2 mt-2 mt-sm-0"><h4 className="m-0">{this.props.artifactState.isFetching ? "loading..." : title}</h4></div>
-                    <div className="publisher-social-buttons col-sm-6 col-12 d-flex justify-content-end order-1 order-sm-2">
-                        <ShareButton />
-                        <TipButtons artifact={this.props.artifact}  />
-                        <ReportButton />
-                    </div>
+
                     <div className="row no-gutters w-100 order-3">
                         <div className="pub-content-info">
                             <span className="font-weight-light text-muted" style={{fontSize: "13px"}}>Published on {niceTime}</span>
@@ -60,20 +56,8 @@ class ContentInfo extends Component {
                     </div>
                 </div>
                 <div className="row no-gutters mt-4">
-                    <div className="d-flex col-1">
-                        <Link className="w-100" to={"/pub/" + publisher}>
-                            {this.props.artifactState.isFetching ? "" : <PublisherIcon className={""} maxHeight={"40px"} maxWidth={"100%"} id={publisher} /> }
-                        </Link>
-                    </div>
-                    <div className="col-10 ml-3">
-                        <div className="mb-1">
-                            {this.props.artifactState.isFetching ? "loading..." : <Link to={"/pub/" + publisher} style={{color: "#000"}}>{pubName}</Link>}
-                        </div>
-                        <div className="row no-gutters">
-                            <div className="col-12" style={descriptionStyle}><Linkify>{description}</Linkify></div>
-                            <div className="row"><p onClick={this.expandDescription} className="col text-muted mt-2" style={{fontSize: "12px", cursor: "pointer"}}>{descriptionToggle}</p></div>
-                        </div>
-                    </div>
+                    <div className="col-12" style={descriptionStyle}><Linkify>{description}</Linkify></div>
+                    <div className="row"><p onClick={this.expandDescription} className="col text-muted mt-2" style={{fontSize: "12px", cursor: "pointer"}}>{descriptionToggle}</p></div>
                 </div>
 
 
