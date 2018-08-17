@@ -30,8 +30,10 @@ class ContentPageWrapper extends Component {
         this.state = {}
     }
 
+    //21252c8315f83d731474964fbd9cda5086aaf9e677dcd31b3fc189e5e9d63e1e
+    //fca1d6
     componentDidMount() {
-        this.props.selectCurrentArtifact("fca1d6");
+        this.props.selectCurrentArtifact("21252c");
     }
 
     render() {

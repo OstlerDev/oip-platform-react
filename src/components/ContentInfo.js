@@ -56,8 +56,8 @@ class ContentInfo extends Component {
                     </div>
                 </div>
                 <div className="row no-gutters mt-4">
-                    <div className="col-12" style={descriptionStyle}><Linkify>{description}</Linkify></div>
-                    <div className="row"><p onClick={this.expandDescription} className="col text-muted mt-2" style={{fontSize: "12px", cursor: "pointer"}}>{descriptionToggle}</p></div>
+                    <div className="col-12" style={{fontSize: "12px"}}><Linkify>{description}</Linkify></div>
+                    {/*<div className="row"><p onClick={this.expandDescription} className="col text-muted mt-2" style={{fontSize: "12px", cursor: "pointer"}}>{descriptionToggle}</p></div>*/}
                 </div>
 
 

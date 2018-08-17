@@ -40,7 +40,7 @@ class ContentPage extends Component {
                 <div className="content-page container-fluid">
                     <div className="margin-container" style={{marginLeft: "5%", marginRight: "5%"}}>
                         <div className="row no-gutters" style={{marginTop: "30px"}}>
-                            <div id="content-info" className="content-info col-12 col-md-9" >
+                            <div id="content-info" className="content-info col-12 " >
                                 <ContentInfo
                                     artifact={this.props.artifact}
                                     artifactState={this.props.artifactState}

@@ -105,7 +105,7 @@ export const payForArtifactFile = (artifact, file, type, coin) => async (dispatc
             try {
                 await waitForCoinbase(dispatch, getState, coin)
             } catch (err) {
-                console.log("Error waiting for coinbase \n", err)
+                console.log("Coinbase closed \n", err)
             }
             preprocess = await apb.getPaymentAddressAndAmount(coin)
         } else {
@@ -115,7 +115,6 @@ export const payForArtifactFile = (artifact, file, type, coin) => async (dispatc
     }
 
     if (preprocess.success) {
-        listenForWebsocketUpdates(dispatch, getState)
         try {
             let txid = await apb.pay()
             console.log("Payment successful: ", txid)

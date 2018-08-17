@@ -97,9 +97,10 @@ class FilesTable extends Component {
 
 		for (var i = 0; i < files.length; i++) {
 			let newObj = files[i];
-
 			newObj.info.icon = this.getEntypoIconForType(files[i].info.getType());
-			filesCopy.push(newObj);
+			if (files[i].info.getSubtype() !== "Thumbnail") {
+                filesCopy.push(newObj);
+            }
 		}
 
 		if (!this.props.extendedView)

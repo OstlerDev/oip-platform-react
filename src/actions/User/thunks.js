@@ -41,7 +41,7 @@ export const accountLogin = (username, pw, options, acc) => (dispatch, getState)
             dispatch(setWallet(account.wallet))
             dispatch(setMnemonic(account.wallet.getMnemonic()))
             //ToDo: set discover to true after server fix
-            dispatch(getCoinBalances({discover:false}))
+            dispatch(getCoinBalances({discover:true}))
             dispatch(getWalletAddresses())
             console.log("About to listen for websockets after account login...")
             listenForWebsocketUpdates(dispatch, getState)
