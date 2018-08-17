@@ -112,7 +112,8 @@ export const payForArtifactFile = (artifact, file, type) => async (dispatch, get
 
     if (preprocess.success) {
         try {
-            await apb.pay()
+            let txid = await apb.pay()
+            console.log("Payment successful: ", txid)
             if (type === "view") {dispatch(payForFile(file.key))}
             else if (type === "buy") {dispatch(buyFile(file.key))}
         } catch (err) {
