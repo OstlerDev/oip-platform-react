@@ -36,7 +36,7 @@ const ContentCard = (props) => {
     }
 
     return (
-        <div className="card col-8 p-5 border-0">
+        <div className="card col-12 col-lg-8 p-xl-5 border-0">
             <div className="card-body p-2 d-flex justify-content-center">
                 <span style={{fontSize: 33, fontWeight: "bold"}} className="card-title">{title}</span>
             </div>
