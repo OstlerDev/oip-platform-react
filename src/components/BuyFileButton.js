@@ -136,8 +136,7 @@ BuyFileButton.propTypes = {
 function mapStateToProps(state) {
     return {
         account: state.User.Account,
-        User: state.User,
-        wallet: state.Wallet
+        User: state.User
     }
 }
 

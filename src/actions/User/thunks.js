@@ -28,6 +28,7 @@ export const createAccount = (username, pw, options) => dispatch => {
 
 export const accountLogin = (username, pw, options, acc) => (dispatch, getState) => {
     if (!options.autoLogin) {dispatch(loginFetching())}
+    options.disover = false
     let account = acc ? acc : options ? new Account(username, pw, options) : new Account(username, pw);
     account.login()
         .then( () => {
@@ -38,7 +39,6 @@ export const accountLogin = (username, pw, options, acc) => (dispatch, getState)
                 localStorage.pw = pw;
             }
             dispatch(setAccount(account))
-            dispatch(setWallet(account.wallet))
             dispatch(setMnemonic(account.wallet.getMnemonic()))
             //ToDo: set discover to true after server fix
             dispatch(getCoinBalances({discover:true}))

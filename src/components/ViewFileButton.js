@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {connect} from 'react-redux'
-import {payForArtifactFile, serializeAndStoreWallet} from "../actions/Wallet/thunks";
+import {payForArtifactFile} from "../actions/Wallet/thunks";
 
 class ViewFileButton extends Component {
     constructor(props){
@@ -140,11 +140,10 @@ ViewFileButton.propTypes = {
 function mapStateToProps(state) {
     return {
         account: state.User.Account,
-        User: state.User,
-        wallet: state.Wallet
+        User: state.User
     }
 }
 
-const mapDispatchToProps = {payForArtifactFile, serializeAndStoreWallet}
+const mapDispatchToProps = {payForArtifactFile}
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewFileButton)

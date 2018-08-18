@@ -24,11 +24,6 @@ export const Wallet = (state = {
                 ...state,
                 mnemonic: action.mem
             }
-        case actions.SET_WALLET:
-            return {
-                ...state,
-                wallet: action.wallet
-            }
 		case actions.PROMPT_SWAP:
 			return {
 				...state,

@@ -71,8 +71,7 @@ class Navbar extends Component {
 
 const mapStateToProps = state => {
     return {
-        User: state.User,
-        Wallet: state.Wallet
+        User: state.User
     }
 }
 const mapDispatchToProps = {
